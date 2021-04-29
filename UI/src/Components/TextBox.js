@@ -78,7 +78,7 @@ function TextBox() {
           onChange={changecutoff}
           value={cutoff}
             type="text"
-            placeholder="ALPHA (By Default) : 0.05"
+            placeholder="Alpha (by default):0.005"
           />
           </div>
         <br/>

@@ -22,7 +22,7 @@ app.use(
     var cutoffvalue = req.query.a_value;
     if (cutoffvalue === undefined)
     {
-      cutoffvalue = 0.05
+      cutoffvalue = 0.005
       }
     console.log(cutoffvalue)
 
@@ -284,11 +284,6 @@ function VSM(query_,cutoffvalue) {
   console.log(result_doc)
   return res.status(200).json(result_doc);
 }
-
-
-
-
-
     
 }));
 
