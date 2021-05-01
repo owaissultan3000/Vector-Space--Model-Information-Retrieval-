@@ -20,7 +20,7 @@ app.use(
   Router.get("/getResult", async (req, res) => {
     let query = req.query.query;
     var cutoffvalue = req.query.a_value;
-    if (cutoffvalue === undefined)
+    if (cutoffvalue === undefined || cutoffvalue === "" || cutoffvalue === null)
     {
       cutoffvalue = 0.005
       }
@@ -175,11 +175,17 @@ function VSM(query_,cutoffvalue) {
         }
         positionalindex[words[i]]['active'] = count;
 
-        positionalindex[words[i]]['idf'] = Number(((Math.log2(count)) / 50).toFixed(3));
+        if (count === 1)
+        {
+            positionalindex[words[i]]['idf'] = 0
+        }
+        else {
+                    positionalindex[words[i]]['idf'] = Number(( (Math.log2(count)) / 50 ).toFixed(3));
 
+            }
         count = 0
-    }
-
+        }
+        
     //query tf idf
     for (var i = 0; i < query_.length; i++) {
         if (query_[i] !== undefined)
@@ -198,13 +204,15 @@ function VSM(query_,cutoffvalue) {
             }
         
         }
-    }
-    
+        }
+        
+
         //saving of index in txt file for future use
         fs.writeFileSync(
             "./Files/positional.txt",
             JSON.stringify(positionalindex))
     }
+    console.log(positionalindex)
     var vector = {}
 
     for (var i = 1; i <= 50; i++) {
@@ -269,20 +277,25 @@ function VSM(query_,cutoffvalue) {
         vector_product[i] = product
         product = 0
     }
-    var result_doc = []
+    var result_doc = {}
     console.log("\nResults:\n")
     for (var i = 1; i <= 50; i++) {
 
-      if ((vector_product[i.toString()] / (query_mod * doc_mod[i.toString()])) > (cutoffvalue / 10))
+            var similarity = Number(vector_product[i.toString()] / (query_mod * doc_mod[i.toString()])).toFixed(4)
+      if (similarity > cutoffvalue)
       {
-                    // result_doc[i] = (vector_product[i.toString()] / (query_mod * doc_mod[i.toString()]))
-                    result_doc.push(i)
+          result_doc[i] = similarity
+          similarity = 0
         
-          }
+      }
+        similarity = 0
 
-  }
-  console.log(result_doc)
-  return res.status(200).json(result_doc);
+    }
+ var result1 = Object.keys(result_doc).sort(function(a, b) {
+  return result_doc[b] - result_doc[a];
+ })
+
+  return res.status(200).json(result1);
 }
     
 }));

@@ -1,7 +1,6 @@
 import React from 'react'
 import Header from './Components/Header'
 import TextBox from './Components/TextBox'
-import Card from './Components/Card'
 import "./App.css"
 
 function App() {
@@ -9,7 +8,6 @@ function App() {
     <div className="App">
       <Header />
       <TextBox />
-      <Card />
     </div>
   )
 }

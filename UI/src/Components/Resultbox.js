@@ -10,7 +10,7 @@ const useStyles = makeStyles({
 
         minWidth: "10%",
         maxWidth: "87%",
-        marginTop: "8%",
+        marginTop: "7%",
         marginLeft:"-0%",
         paddingLeft: "-30%",
         height:"50%"
@@ -34,21 +34,21 @@ export default function OutlinedCard({ans}) {
   
   const classes = useStyles();
 
+
   let docids = ans.toString().split(",")
-  
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          <h2 style={{paddingLeft: '150px',color:"green"}}>"List Of Docs"</h2>
+          <h2 style={{paddingLeft: '25%',color:"green"}}>"List Of Ranked Docs"</h2>
           <hr />
-          <br/>
+  
         </Typography>
         
-        <Typography variant="h5" component="h2">
-
+        <Typography variant="h5" component="h5">
+         
           {docids.map((value) => (
-            <span>{value}{", "}</span>
+           <strong> <span style={{fontSize:"20px",marginTop:"-1%"}}>{value}{", "}</span> </strong>
       ))}
                
         </Typography>
